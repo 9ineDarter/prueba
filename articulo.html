@@ -35,7 +35,7 @@
       </div>
     </section>
 
-    <!-- Footer (igual que en index.html) -->
+    <!-- Footer -->
     <footer>
       <a href="https://www.instagram.com/9inedarter" target="_blank">Instagram</a> |
       <a href="https://x.com/9inedarter" target="_blank">X</a> |
@@ -46,11 +46,16 @@
 
   <script src="script.js"></script>
   <script>
-    // Cargar artículo basado en el parámetro de la URL
     document.addEventListener('DOMContentLoaded', () => {
       setupMenu(); // Configura el menú (de script.js)
 
-      // Obtener el slug y título de la URL
+      // Mostrar sidebar automáticamente
+      const sidebar = document.getElementById('sidebar');
+      const menuToggle = document.getElementById('menuToggle');
+      sidebar.classList.remove('hidden'); // Quitar clase hidden para mostrar el sidebar
+      menuToggle.setAttribute('aria-expanded', 'true'); // Actualizar estado del botón
+
+      // Cargar artículo basado en el parámetro de la URL
       const params = new URLSearchParams(window.location.search);
       const docxPath = params.get('docx');
       const title = params.get('title');
