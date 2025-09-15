@@ -24,16 +24,38 @@ body {
 .sidebar.hidden {
   transform: translateX(-110%);
 }
-.sidebar h2 { text-align: center; margin-bottom: 20px; color: gold; }
-
+@media (max-width: 900px) {
+  .sidebar {
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Sombra para efecto popup */
+  }
+  .sidebar:not(.hidden) {
+    background: #001233;
+    z-index: 2000; /* Más alto que el contenido principal */
+  }
+  .sidebar:not(.hidden) + .main-content::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Fondo oscuro como overlay */
+    z-index: 1500; /* Debajo del sidebar, encima del contenido */
+  }
+}
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: gold;
+}
 .sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
-.sidebar ul li { margin: 15px 0; }
-
+.sidebar ul li {
+  margin: 15px 0;
+}
 .sidebar ul li a, .sidebar .dropbtn {
   color: #fff;
   text-decoration: none;
@@ -47,25 +69,23 @@ body {
   font-size: 1rem;
   cursor: pointer;
 }
-
-.sidebar ul li a:hover, .sidebar .dropbtn:hover { background-color: gold; color: #001233; }
-
-/* Dropdown */
+.sidebar ul li a:hover, .sidebar .dropbtn:hover {
+  background-color: gold;
+  color: #001233;
+}
 .dropdown-content {
   display: none;
   background-color: #001233;
   margin-left: 10px;
   border-left: 2px solid gold;
 }
-
 .dropdown-content a {
   padding: 6px 12px;
   display: block;
 }
-
-.dropdown.open .dropdown-content { display: block; }
-
-/* Main content */
+.dropdown.open .dropdown-content {
+  display: block;
+}
 .main-content {
   margin-left: 240px;
   width: calc(100% - 240px);
@@ -76,11 +96,9 @@ body {
   margin-left: 0;
   width: 100%;
 }
-
-/* Header */
 .header {
   display: flex;
-  flex-direction: column;  /* Apila hijos verticalmente */
+  flex-direction: column;
   align-items: center;
   padding: 10px 0;
   font-size: 2rem;
@@ -91,10 +109,10 @@ body {
   z-index: 500;
 }
 header .subtitle {
-    font-size: 1.2rem;   /* Más pequeño que el h1 */
-    color: #ffd700;      /* Color dorado, visible sobre tu fondo azul oscuro */
-    margin-top: 0.1rem;  /* Espacio entre h1 y h2 */
-    text-align: center;  /* Centrado debajo del h1 */
+  font-size: 1.2rem;
+  color: #ffd700;
+  margin-top: 0.1rem;
+  text-align: center;
 }
 .hamburger {
   position: absolute;
@@ -108,8 +126,6 @@ header .subtitle {
   padding: 6px 10px;
   cursor: pointer;
 }
-
-/* Barra mes */
 .month-nav {
   display: flex;
   justify-content: space-between;
@@ -121,8 +137,10 @@ header .subtitle {
   border-radius: 10px;
   border: 2px solid gold;
 }
-
-.month-nav span { font-size: 1.5rem; font-weight: bold; }
+.month-nav span {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
 .month-nav button {
   background: gold;
   border: none;
@@ -131,8 +149,6 @@ header .subtitle {
   cursor: pointer;
   font-weight: bold;
 }
-
-/* Días de la semana */
 .dow-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -146,8 +162,6 @@ header .subtitle {
   text-align: center;
   padding: 6px 0;
 }
-
-/* Grid calendario */
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -155,8 +169,6 @@ header .subtitle {
   margin: 0 auto 40px auto;
   gap: 6px;
 }
-
-/* Días */
 .calendar-grid .day {
   background: #0a1f44;
   border-radius: 8px;
@@ -175,27 +187,49 @@ header .subtitle {
 .calendar-grid .day.other-month {
   opacity: 0.35;
 }
-
-/* Días pasados */
-.past { opacity: 0.5; cursor: default; }
-
-/* Colores eventos */
-.event.espana { background-color: #c8102e; color: #fff; margin-top: 6px; border-radius: 4px; font-size: 0.8rem; padding: 2px; }
-.event.pdc { background-color: #f1c40f; color: #001233; margin-top: 6px; border-radius: 4px; font-size: 0.8rem; padding: 2px; }
-.event.wdf { background-color: #3498db; color: #fff; margin-top: 6px; border-radius: 4px; font-size: 0.8rem; padding: 2px; }
-
-/* Pop-up */
+.past {
+  opacity: 0.5;
+  cursor: default;
+}
+.event.espana {
+  background-color: #c8102e;
+  color: #fff;
+  margin-top: 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  padding: 2px;
+}
+.event.pdc {
+  background-color: #f1c40f;
+  color: #001233;
+  margin-top: 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  padding: 2px;
+}
+.event.wdf {
+  background-color: #3498db;
+  color: #fff;
+  margin-top: 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  padding: 2px;
+}
 .popup {
   display: none;
   position: fixed;
   z-index: 2000;
-  left:0; top:0;
-  width:100%; height:100%;
-  background-color: rgba(0,0,0,0.85);
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
   justify-content: center;
   align-items: center;
 }
-.popup.show { display: flex; }
+.popup.show {
+  display: flex;
+}
 .popup-content {
   background-color: #001233;
   border-radius: 12px;
@@ -216,13 +250,12 @@ header .subtitle {
 }
 .close {
   position: absolute;
-  top: 8px; right: 12px;
+  top: 8px;
+  right: 12px;
   font-size: 28px;
   color: gold;
   cursor: pointer;
 }
-
-/* Contacto */
 .contact {
   max-width: 600px;
   margin: 40px auto;
@@ -238,28 +271,33 @@ header .subtitle {
   padding: 16px;
   text-align: center;
 }
-.contact-banner .contacto-destacado { color: gold; }
-.contact .nota { opacity: 0.85; font-size: 0.95rem; }
-
-/* Footer */
+.contact-banner .contacto-destacado {
+  color: gold;
+}
+.contact .nota {
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
 footer {
   text-align: center;
   padding: 20px;
   border-top: 2px solid gold;
 }
-footer a { color: gold; text-decoration: none; font-weight: bold; }
-footer a:hover { text-decoration: underline; }
-
-/* Estilos para secciones y artículos */
+footer a {
+  color: gold;
+  text-decoration: none;
+  font-weight: bold;
+}
+footer a:hover {
+  text-decoration: underline;
+}
 .section.hidden {
   display: none;
 }
-
 #articles-list {
   max-width: 900px;
   margin: 20px auto;
 }
-
 .article-preview {
   background: #001a44;
   border: 2px solid gold;
@@ -271,14 +309,12 @@ footer a:hover { text-decoration: underline; }
   align-items: center;
   text-align: center;
 }
-
 .article-image {
   width: 100%;
   max-width: 200px;
   border-radius: 8px;
   margin-bottom: 10px;
 }
-
 .read-button {
   background: gold;
   color: #001233;
@@ -288,12 +324,42 @@ footer a:hover { text-decoration: underline; }
   cursor: pointer;
   font-weight: bold;
 }
-
 .read-button:hover {
   background: #ffd700;
 }
-
-/* Responsive */
+.article-container {
+  max-width: 900px;
+  margin: 20px auto;
+  background: #001a44;
+  border: 2px solid gold;
+  border-radius: 10px;
+  padding: 20px;
+}
+.article-container h2 {
+  color: gold;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+.article-container p, .article-container h1, .article-container h2, .article-container h3 {
+  color: #fff;
+  line-height: 1.6;
+}
+.article-container img#rutina-image {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid gold;
+}
+.article-container p#rutina-error {
+  color: #ff4d4d;
+  text-align: center;
+  font-size: 1rem;
+}
 @media (max-width: 900px) {
   .main-content {
     margin-left: 0;
@@ -308,42 +374,9 @@ footer a:hover { text-decoration: underline; }
   .hamburger {
     position: fixed;
   }
-
-}
-
-/* Menú lateral */
-.sidebar {
-  width: 240px;
-  background-color: #001233;
-  padding: 20px;
-  border-right: 2px solid gold;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  transform: translateX(0);
-  transition: transform 0.25s ease-in-out;
-  z-index: 1000;
-}
-.sidebar.hidden {
-  transform: translateX(-110%);
-}
-@media (max-width: 900px) {
-  .sidebar {
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Sombra para efecto popup */
-  }
-  .sidebar:not(.hidden) {
-    background: #001233;
-    z-index: 2000; /* Más alto que el contenido principal */
-  }
-  .sidebar:not(.hidden) + .main-content::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
+  .article-container img#rutina-image {
+    max-width: 100%;
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85); /* Fondo oscuro como overlay */
-    z-index: 1500; /* Debajo del sidebar, encima del contenido */
+    margin: 10px auto;
   }
 }
