@@ -308,4 +308,42 @@ footer a:hover { text-decoration: underline; }
   .hamburger {
     position: fixed;
   }
+
+}
+
+/* Menú lateral */
+.sidebar {
+  width: 240px;
+  background-color: #001233;
+  padding: 20px;
+  border-right: 2px solid gold;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateX(0);
+  transition: transform 0.25s ease-in-out;
+  z-index: 1000;
+}
+.sidebar.hidden {
+  transform: translateX(-110%);
+}
+@media (max-width: 900px) {
+  .sidebar {
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Sombra para efecto popup */
+  }
+  .sidebar:not(.hidden) {
+    background: #001233;
+    z-index: 2000; /* Más alto que el contenido principal */
+  }
+  .sidebar:not(.hidden) + .main-content::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Fondo oscuro como overlay */
+    z-index: 1500; /* Debajo del sidebar, encima del contenido */
+  }
 }
