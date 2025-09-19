@@ -82,7 +82,18 @@
 
   <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
   <script src="script.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    showSection(hash);
+  } else {
+    showSection('calendario'); // sección por defecto
+  }
+});
+  </script>
 </body>
 </html>
+
 
 
