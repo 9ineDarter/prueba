@@ -450,7 +450,6 @@ function setupMenu(){
     showSection('contacto');
     sidebar.classList.add('hidden');
   });
-}
 
 // Pop-up para eventos
 function setupPopup(){
@@ -485,5 +484,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   scheduleMidnightTick();
   showSection('calendario'); // Mostrar calendario por default
 });
+
 
 
