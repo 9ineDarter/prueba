@@ -317,15 +317,31 @@ footer a:hover { text-decoration: underline; }
 }
 /* Boto casa */
 .home-button {
-  display: inline-block;
   background-color: gold;
   color: #001233;
-  padding: 10px 20px;
+  padding: 8px 12px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: bold;
+  font-size: 16px;
   transition: background-color 0.3s ease;
 }
 .home-button:hover {
   background-color: #ffd700;
 }
+
+.back-button {
+  background-color: transparent;
+  color: #001233;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+.back-button:hover {
+  color: #444;
+}
+
+
