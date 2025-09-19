@@ -331,18 +331,18 @@ footer a:hover { text-decoration: underline; }
 }
 
 .back-button {
-  background-color: gold;
+  background-color: transparent;
   color: #001233;
   padding: 8px 12px;
   border-radius: 8px;
-  text-decoration: none;
+  text-decoration: golde;
   font-weight: bold;
   font-size: 16px;
-  transition: background-color 0.3s ease;
 }
 .back-button:hover {
-  background-color: #ffd700;
+  background-color: transparent;
 }
+
 
 
 
