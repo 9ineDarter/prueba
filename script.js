@@ -402,12 +402,24 @@ function setupMenu(){
   const sidebar = document.getElementById('sidebar');
   const menuToggle = document.getElementById('menuToggle');
 
-  // Alternar menú al hacer clic en la hamburguesa
+  if (!sidebar || !menuToggle) return; // Evita errores si no existen
+
   menuToggle.addEventListener('click', ()=>{
-    sidebar.classList.toggle('hidden'); // aquí usamos hidden
+    sidebar.classList.toggle('hidden');
     const expanded = !sidebar.classList.contains('hidden');
     menuToggle.setAttribute('aria-expanded', String(expanded));
   });
+
+  document.addEventListener('click', (e)=>{
+    if (window.matchMedia('(max-width: 900px)').matches){
+      if (!sidebar.contains(e.target) && e.target !== menuToggle){
+        sidebar.classList.add('hidden');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+}
+
 
   // Cerrar menú al clicar fuera (solo en móvil)
   document.addEventListener('click', (e)=>{
@@ -473,4 +485,5 @@ document.addEventListener('DOMContentLoaded', ()=>{
   scheduleMidnightTick();
   showSection('calendario'); // Mostrar calendario por default
 });
+
 
