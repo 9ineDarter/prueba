@@ -331,19 +331,17 @@ footer a:hover { text-decoration: underline; }
 }
 
 .back-button {
-  background-color: transparent;
-  color: #001233;
+  background-color: transparent; /* Fondo transparente */
+  color: gold; /* Letras doradas */
   padding: 8px 12px;
+  border: none; /* Sin borde */
   border-radius: 8px;
-  text-decoration: golde;
+  text-decoration: none; /* Corrige 'golde' por 'none' */
   font-weight: bold;
   font-size: 16px;
 }
+
 .back-button:hover {
-  background-color: transparent;
+  background-color: transparent; /* Mantiene fondo transparente al pasar el cursor */
+  color: gold; /* Mantiene el color dorado al pasar el cursor */
 }
-
-
-
-
-
