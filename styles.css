@@ -332,17 +332,18 @@ footer a:hover { text-decoration: underline; }
 
 .back-button {
   background-color: gold;
-  color: #ffd700;
+  color: #001233;
   padding: 8px 12px;
   border-radius: 8px;
   text-decoration: none;
   font-weight: bold;
   font-size: 16px;
-  transition: color 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 .back-button:hover {
-  color: #001233;
+  background-color: #ffd700;
 }
+
 
 
 
