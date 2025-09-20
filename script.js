@@ -306,7 +306,6 @@ function buildCalendar(year, monthIndex) {
     cell.className = 'day other-month';
     grid.appendChild(cell);
   }
-}
 
     // Torneos
     const fechaStr = `${year}-${String(monthIndex+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
@@ -527,6 +526,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   scheduleMidnightTick();
   showSection('calendario'); // Mostrar calendario por default
 });
+
 
 
 
