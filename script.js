@@ -307,68 +307,87 @@ function buildCalendar(year, monthIndex) {
     grid.appendChild(cell);
   }
 
-    // Torneos
-    const fechaStr = `${year}-${String(monthIndex+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const eventosHoy = torneos.filter(ev => ev.fecha === fechaStr);
+// Torneos
+const fechaStr = `${year}-${String(monthIndex + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+const eventosHoy = torneos.filter(ev => ev.fecha === fechaStr);
 
-    if (eventosHoy.length > 0) {
-      eventosHoy.forEach(ev => {
-        const badge = document.createElement('div');
-        badge.textContent = ev.titulo;
-        badge.className = `event ${ev.tipo}`;
-        cell.appendChild(badge);
+if (eventosHoy.length > 0) {
+  eventosHoy.forEach(ev => {
+    const badge = document.createElement('div');
+    badge.textContent = ev.titulo;
+    badge.className = `event ${ev.tipo}`;
+    cell.appendChild(badge);
 
-        badge.addEventListener('click', (e) => {
-          e.stopPropagation(); // evita que el click se propague al cell
-          document.getElementById('popupTitle').textContent = ev.titulo;
-          document.getElementById('popupType').textContent = ev.tipo.toUpperCase();
-          document.getElementById('popupDate').textContent = ev.fecha;
-          document.getElementById('popupHour').textContent = ev.hora;
-          document.getElementById('popupLink').href = ev.enlace;
-          const popup = document.getElementById('popup');
-          popup.classList.add('show');
-          popup.setAttribute('aria-hidden', 'false');
-        });
-      });
-    }
+    badge.addEventListener('click', (e) => {
+      e.stopPropagation(); // Evita que el click se propague al cell
+      document.getElementById('popupTitle').textContent = ev.titulo;
+      document.getElementById('popupType').textContent = ev.tipo.toUpperCase();
+      document.getElementById('popupDate').textContent = ev.fecha;
+      document.getElementById('popupHour').textContent = ev.hora;
+      document.getElementById('popupLink').href = ev.enlace;
 
-    grid.appendChild(cell);
-  
-  const totalCells = startOffset + totalDays;
-  const trailing = (7 - (totalCells % 7)) % 7;
-  for (let i=0;i<trailing;i++){
-    const cell = document.createElement('div');
-    cell.className = 'day other-month';
-    grid.appendChild(cell);
-  }
+      const popup = document.getElementById('popup');
+      popup.classList.add('show');
+      popup.setAttribute('aria-hidden', 'false');
+    });
+  });
 }
 
-function setViewToToday(){
+grid.appendChild(cell);
+
+// Celdas de arrastre para completar la última semana del mes
+const totalCells = startOffset + totalDays;
+const trailing = (7 - (totalCells % 7)) % 7;
+
+for (let i = 0; i < trailing; i++) {
+  const cell = document.createElement('div');
+  cell.className = 'day other-month';
+  grid.appendChild(cell);
+}
+
+// Función para mostrar el calendario del día actual
+function setViewToToday() {
   state.today = new Date();
   state.viewYear = state.today.getFullYear();
   state.viewMonth = state.today.getMonth();
   buildCalendar(state.viewYear, state.viewMonth);
 }
-function goMonth(delta){
+
+// Función para navegar entre meses
+function goMonth(delta) {
   state.viewMonth += delta;
-  if (state.viewMonth < 0){ state.viewMonth = 11; state.viewYear--; }
-  if (state.viewMonth > 11){ state.viewMonth = 0; state.viewYear++; }
+
+  if (state.viewMonth < 0) {
+    state.viewMonth = 11;
+    state.viewYear--;
+  }
+
+  if (state.viewMonth > 11) {
+    state.viewMonth = 0;
+    state.viewYear++;
+  }
+
   buildCalendar(state.viewYear, state.viewMonth);
 }
-function scheduleMidnightTick(){
+
+// Función para actualizar el calendario justo después de medianoche
+function scheduleMidnightTick() {
   const now = new Date();
-  const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0,0,1);
+  const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 1);
   const ms = next - now;
-  setTimeout(()=>{
+
+  setTimeout(() => {
     const oldMonth = state.today.getMonth();
     setViewToToday();
     const newMonth = state.today.getMonth();
-    if (newMonth !== oldMonth){
+
+    if (newMonth !== oldMonth) {
       state.viewYear = state.today.getFullYear();
       state.viewMonth = state.today.getMonth();
       buildCalendar(state.viewYear, state.viewMonth);
     }
-    scheduleMidnightTick();
+
+    scheduleMidnightTick(); // Reprograma el siguiente tick
   }, ms);
 }
 
@@ -525,6 +544,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   scheduleMidnightTick();
   showSection('calendario'); // Mostrar calendario por default
 });
+
 
 
 
