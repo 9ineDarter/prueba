@@ -436,11 +436,12 @@ function setupMenu(){
     showSection('calendario');
     sidebar.classList.add('hidden');
   });
-  document.getElementById('link-entrevistas').addEventListener('click', () => {
-    showSection('entrevistas');
+  document.getElementById('link-actualidad').addEventListener('click', () => {
+    showSection('actualidad');
     loadArticles();
     sidebar.classList.add('hidden');
-  });
+});
+
     document.getElementById('link-rutinas').addEventListener('click', () => {
       showSection('rutinas');
       loadRutinas();
@@ -484,6 +485,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   scheduleMidnightTick();
   showSection('calendario'); // Mostrar calendario por default
 });
+
 
 
 
