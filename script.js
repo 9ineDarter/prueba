@@ -227,7 +227,15 @@ const torneos = [
   },
 ];
 
-function buildCalendar(year, monthIndex) {
+// === Funciones de calendario ===
+function formatMonthYear(year, monthIndex){
+  const formatter = new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' });
+  return formatter.format(new Date(year, monthIndex, 1));
+}
+function weekdayMondayFirst(jsWeekday){ return (jsWeekday + 6) % 7; }
+function daysInMonth(year, monthIndex){ return new Date(year, monthIndex + 1, 0).getDate(); }
+
+function buildCalendar(year, monthIndex){
   const grid = document.getElementById('calendarGrid');
   const monthYear = document.getElementById('monthYear');
   grid.innerHTML = '';
@@ -237,76 +245,26 @@ function buildCalendar(year, monthIndex) {
   const startOffset = weekdayMondayFirst(first.getDay());
   const totalDays = daysInMonth(year, monthIndex);
 
-  // Relleno inicial (días del mes anterior)
-  for (let i = 0; i < startOffset; i++) {
+  for (let i=0;i<startOffset;i++){
     const cell = document.createElement('div');
     cell.className = 'day other-month';
     grid.appendChild(cell);
   }
 
-  // Días del mes actual
-  for (let d = 1; d <= totalDays; d++) {
+  const isCurrentMonth = (year === state.today.getFullYear() && monthIndex === state.today.getMonth());
+
+  for (let d=1; d<=totalDays; d++){
     const cell = document.createElement('div');
     cell.className = 'day';
-
-    // Día de la semana (ej. "lun", "mar", etc.)
-    const date = new Date(year, monthIndex, d);
-    const weekday = date.toLocaleDateString('es-ES', { weekday: 'short' });
-
-    const label = document.createElement('div');
-    label.className = 'weekday-label';
-    label.textContent = weekday;
-    cell.appendChild(label);
-
-    // Número del día
     const span = document.createElement('div');
     span.className = 'num';
     span.textContent = d;
     cell.appendChild(span);
 
-    // Marcar hoy y pasado
-    if (year === state.today.getFullYear() && monthIndex === state.today.getMonth()) {
+    if (isCurrentMonth){
       if (d < state.today.getDate()) cell.classList.add('past');
       if (d === state.today.getDate()) cell.classList.add('today');
     }
-
-    // Eventos del día
-    const fechaStr = `${year}-${String(monthIndex + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-    const eventosHoy = torneos.filter(ev => ev.fecha === fechaStr);
-
-    if (eventosHoy.length > 0) {
-      eventosHoy.forEach(ev => {
-        const badge = document.createElement('div');
-        badge.textContent = ev.titulo;
-        badge.className = `event ${ev.tipo}`;
-        cell.appendChild(badge);
-
-        badge.addEventListener('click', (e) => {
-          e.stopPropagation();
-          document.getElementById('popupTitle').textContent = ev.titulo;
-          document.getElementById('popupType').textContent = ev.tipo.toUpperCase();
-          document.getElementById('popupDate').textContent = ev.fecha;
-          document.getElementById('popupHour').textContent = ev.hora;
-          document.getElementById('popupLink').href = ev.enlace;
-          const popup = document.getElementById('popup');
-          popup.classList.add('show');
-          popup.setAttribute('aria-hidden', 'false');
-        });
-      });
-    }
-
-    grid.appendChild(cell);
-  }
-
-  // Relleno final (días del mes siguiente)
-  const totalCells = startOffset + totalDays;
-  const trailing = (7 - (totalCells % 7)) % 7;
-  for (let i = 0; i < trailing; i++) {
-    const cell = document.createElement('div');
-    cell.className = 'day other-month';
-    grid.appendChild(cell);
-  }
-}
 
     // Torneos
     const fechaStr = `${year}-${String(monthIndex+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
@@ -527,7 +485,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   scheduleMidnightTick();
   showSection('calendario'); // Mostrar calendario por default
 });
-
 
 
 
