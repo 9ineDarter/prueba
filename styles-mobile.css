@@ -102,14 +102,6 @@
     border-radius: 6px !important;
     font-weight: bold !important;
   }
-  .weekday-label {
-  font-size: 0.9rem;
-  color: gold;
-  margin-bottom: 4px;
-  font-weight: bold;
-  text-transform: capitalize;
-  text-align: center;
-  }
 
   .event.pdc { background-color: #f1c40f !important; color: #001233 !important; }
   .event.wdf { background-color: #3498db !important; color: #fff !important; }
