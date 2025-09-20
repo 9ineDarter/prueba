@@ -333,8 +333,7 @@ function buildCalendar(year, monthIndex) {
     }
 
     grid.appendChild(cell);
-  }
-
+  
   const totalCells = startOffset + totalDays;
   const trailing = (7 - (totalCells % 7)) % 7;
   for (let i=0;i<trailing;i++){
@@ -526,6 +525,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   scheduleMidnightTick();
   showSection('calendario'); // Mostrar calendario por default
 });
+
 
 
 
