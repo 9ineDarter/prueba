@@ -1,0 +1,133 @@
+@media (max-width: 900px) {
+  /* Layout general */
+  body {
+    font-size: 16px;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    width: 80%;
+    max-width: 300px;
+    height: 100%;
+    z-index: 1000;
+    transform: translateX(-110%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .hamburger {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1100;
+    font-size: 24px;
+    padding: 8px 12px;
+  }
+
+  /* Header */
+  .header h1 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .header .subtitle {
+    font-size: 1rem;
+    text-align: center;
+    padding: 0 10px;
+  }
+
+  /* Calendario */
+  .calendar-grid {
+    display: flex;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding-bottom: 10px;
+  }
+
+  .calendar-grid .day {
+    min-width: 100px;
+    flex-shrink: 0;
+  }
+
+  .month-nav {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  /* Tipografía y botones */
+  .article-preview h3 {
+    font-size: 1.2rem;
+  }
+
+  .read-button,
+  .home-button,
+  .back-button {
+    font-size: 1rem;
+    padding: 12px 20px;
+    margin: 6px 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Contenedores */
+  .section {
+    padding: 10px;
+  }
+
+  .article-container,
+  .contact,
+  #mobile-events {
+    margin: 10px auto;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .article-image,
+  .article-container img#rutina-image {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 10px auto;
+    display: block;
+  }
+
+  /* Popups */
+  .popup-content {
+    width: 90%;
+    max-width: 100%;
+    padding: 20px;
+    font-size: 0.95rem;
+  }
+
+  .popup-content a {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
+  /* Eventos móviles */
+  #mobile-events {
+    max-width: 900px;
+    margin: 20px auto;
+  }
+
+  /* Ocultar secciones no activas */
+  .section.hidden {
+    display: none !important;
+  }
+}
