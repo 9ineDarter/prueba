@@ -420,17 +420,6 @@ function setupMenu(){
   });
 }
 
-
-  // Cerrar menú al clicar fuera (solo en móvil)
-  document.addEventListener('click', (e)=>{
-    if (window.matchMedia('(max-width: 900px)').matches){
-      if (!sidebar.contains(e.target) && e.target !== menuToggle){
-        sidebar.classList.add('hidden');
-        menuToggle.setAttribute('aria-expanded', 'false');
-      }
-    }
-  });
-
   // Links de secciones
   document.getElementById('link-calendario').addEventListener('click', () => {
     showSection('calendario');
@@ -495,3 +484,4 @@ document.addEventListener('DOMContentLoaded', () => {
       break;
   }
 });
+
