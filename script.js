@@ -466,7 +466,25 @@ function setupMonthControls(){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  setViewToToday(); // ← ESTA LÍNEA ES CLAVE
+  // Inicializa el calendario con la fecha actual
+  setViewToToday();
+
+  // Activa el menú lateral responsive
+  setupMenu();
+
+  // Activa el pop-up de eventos
+  setupPopup();
+
+  // Activa el pop-up de artículos
+  setupArticlePopup();
+
+  // Activa los botones de navegación mensual
+  setupMonthControls();
+
+  // Programa actualización automática a medianoche
+  scheduleMidnightTick();
+
+  // Muestra la sección correspondiente según el hash en la URL
   const hash = window.location.hash.replace('#', '');
   switch (hash) {
     case 'actualidad':
@@ -485,6 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
       break;
   }
 });
+
 
 
 
