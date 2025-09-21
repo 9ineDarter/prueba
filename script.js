@@ -466,6 +466,7 @@ function setupMonthControls(){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  setViewToToday(); // ← ESTA LÍNEA ES CLAVE
   const hash = window.location.hash.replace('#', '');
   switch (hash) {
     case 'actualidad':
@@ -484,4 +485,6 @@ document.addEventListener('DOMContentLoaded', () => {
       break;
   }
 });
+
+
 
