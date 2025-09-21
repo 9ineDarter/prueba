@@ -476,15 +476,28 @@ function setupMonthControls(){
   document.getElementById('nextMonth').addEventListener('click', ()=> goMonth(1));
 }
 
-document.addEventListener('DOMContentLoaded', ()=>{
-  setupMenu();
-  setupPopup();
-  setupArticlePopup();
-  setupMonthControls();
-  setViewToToday();
-  scheduleMidnightTick();
-  showSection('calendario'); // Mostrar calendario por default
+document.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  switch (hash) {
+    case 'actualidad':
+      showSection('actualidad');
+      loadArticles();
+      break;
+    case 'rutinas':
+      showSection('rutinas');
+      loadRutinas();
+      break;
+    case 'contacto':
+      showSection('contacto');
+      break;
+    default:
+      showSection('calendario');
+      break;
+  }
 });
+
+});
+
 
 
 
