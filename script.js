@@ -495,9 +495,3 @@ document.addEventListener('DOMContentLoaded', () => {
       break;
   }
 });
-
-});
-
-
-
-
