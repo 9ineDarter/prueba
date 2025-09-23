@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ranking PDC | InfoDarts</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles-mobile.css" />
+  <script src="scripts/xlsx.full.min.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo">InfoDarts</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">🏠 Inicio</a></li>
+        <li><a href="actualidad.html">📰 Actualidad</a></li>
+        <li><a href="rutinas.html">🏋️ Rutinas</a></li>
+        <li><a href="ranking.html" class="active">📊 Ranking</a></li>
+        <li><a href="contacto.html">📨 Contacto</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <header class="header">
+      <h1>Ranking PDC Order of Merit</h1>
+      <p class="subtitle">Clasificación oficial actualizada</p>
+    </header>
+
+    <section class="article-container">
+      <div id="ranking-table">Cargando ranking...</div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; InfoDarts 2025</p>
+  </footer>
+
+  <script>
+    fetch('articles/ranking.xlsx')
+      .then(res => res.arrayBuffer())
+      .then(buffer => {
+        const workbook = XLSX.read(buffer, { type: 'array' });
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const data = XLSX.utils.sheet_to_json(sheet);
+
+        const container = document.getElementById('ranking-table');
+        container.innerHTML = `
+          <table class="ranking-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Jugador</th>
+                <th>Puntos</th>
+                <th>Tour</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.map(player => `
+                <tr class="${player['Top 64'] === '✅' ? 'top64' : ''}">
+                  <td>${player['Posición']}</td>
+                  <td>${player['Jugador']}</td>
+                  <td>£${(player['Puntos (£)'] / 1000).toFixed(1)}k</td>
+                  <td>${player['Tour Card (años)']}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      })
+      .catch(() => {
+        document.getElementById('ranking-table').innerHTML = '<p>Error al cargar el ranking.</p>';
+      });
+  </script>
+</body>
+</html>
