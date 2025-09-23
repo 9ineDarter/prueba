@@ -350,34 +350,3 @@ footer a:hover { text-decoration: underline; }
   color: gold;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Más intensa al pasar el cursor */
 }
-
-/* PDC Order of Merit */
-.ranking-table {
-  width: 100%;
-  max-width: 900px;
-  margin: 20px auto;
-  border-collapse: collapse;
-  background: #001a44;
-  border: 2px solid gold;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.ranking-table th, .ranking-table td {
-  padding: 12px;
-  text-align: center;
-  border-bottom: 1px solid gold;
-  color: #fff;
-}
-
-.ranking-table th {
-  background-color: #0a1f44;
-  color: gold;
-  font-size: 1.1rem;
-}
-
-.ranking-table tr.top64 {
-  background-color: #002b66;
-  font-weight: bold;
-  color: #ffd700;
-}
