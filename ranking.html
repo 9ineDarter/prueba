@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ranking PDC | InfoDarts</title>
+  <title>InfoDarts - Ranking PDC Order Of Merit</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="styles-mobile.css" />
   <script src="scripts/xlsx.full.min.js"></script>
 </head>
 <body>
-  <aside class="sidebar">
-    <div class="logo">InfoDarts</div>
-    <nav>
-      <ul>
-        <li><a href="index.html">🏠 Inicio</a></li>
-        <li><a href="actualidad.html">📰 Actualidad</a></li>
-        <li><a href="rutinas.html">🏋️ Rutinas</a></li>
-        <li><a href="ranking.html" class="active">📊 Ranking</a></li>
-        <li><a href="contacto.html">📨 Contacto</a></li>
-      </ul>
-    </nav>
+ 
+  <aside id="sidebar" class="sidebar hidden">
+    <h2>InfoDarts</h2>
+    <ul>
+      <li><a id="link-calendario" href="index.html#calendario">Calendario</a></li>
+      <li><a id="link-entrevistas" href="index.html#entrevistas">Entrevistas</a></li>
+      <li><a id="link-rutinas" href="index.html#rutinas">Rutinas de Entrenamiento</a></li>
+      <li><a id="link-entrevistas" href="index.html#entrevistas">Ranking PDC Order Of Merit</a></li>
+      <li><a id="link-contacto" href="index.html#contacto">Contacto</a></li>
+    </ul>
   </aside>
 
   <main class="main-content">
@@ -37,9 +36,13 @@
     </section>
   </main>
 
-  <footer>
-    <p>&copy; InfoDarts 2025</p>
-  </footer>
+    <footer>
+      <a href="https://www.instagram.com/9inedarter" target="_blank">Instagram</a> |
+      <a href="https://x.com/9inedarter" target="_blank">X</a> |
+      <a href="https://ko-fi.com/9inedarter" target="_blank">Donar</a> |
+      <a href="mailto:9inedarter@gmail.com">Contacto</a>
+    </footer>
+  </div>
 
   <script>
     fetch('articles/ranking_dardos_pdc_desde.xlsx')
