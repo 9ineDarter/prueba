@@ -13,11 +13,11 @@
     <div class="logo">InfoDarts</div>
     <nav>
       <ul>
-        <li><a href="#" id="link-calendario">Calendario</a></li>
-        <li><a href="#" id="link-actualidad">Actualidad</a></li>
-        <li><a href="#" id="link-rutinas">Rutinas de Entrenamiento</a></li> 
-        <li><a href="ranking.html"> Ranking PDC Order Of Merit</a></li>
-        <li><a href="#" id="link-contacto">Contacto</a></li>
+        <li><a href="index.html">🏠 Inicio</a></li>
+        <li><a href="actualidad.html">📰 Actualidad</a></li>
+        <li><a href="rutinas.html">🏋️ Rutinas</a></li>
+        <li><a href="ranking.html" class="active">📊 Ranking</a></li>
+        <li><a href="contacto.html">📨 Contacto</a></li>
       </ul>
     </nav>
   </aside>
@@ -25,11 +25,15 @@
   <main class="main-content">
     <header class="header">
       <h1>Ranking PDC Order of Merit</h1>
-      <p class="subtitle">Clasificación oficial actualizada</p>
+      <p class="subtitle">Clasificación oficial actualizada tras los torneos recientes</p>
     </header>
 
     <section class="article-container">
-      <div id="ranking-table">Cargando ranking...</div>
+      <h2 class="section-title">🎯 Top 64</h2>
+      <div id="ranking-top64">Cargando...</div>
+
+      <h2 class="section-title">📋 Resto del ranking</h2>
+      <div id="ranking-resto">Cargando...</div>
     </section>
   </main>
 
@@ -38,39 +42,49 @@
   </footer>
 
   <script>
-    fetch('articles/ranking.xlsx')
+    fetch('articles/ranking_dardos_pdc_desde.xlsx')
       .then(res => res.arrayBuffer())
       .then(buffer => {
         const workbook = XLSX.read(buffer, { type: 'array' });
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const data = XLSX.utils.sheet_to_json(sheet);
 
-        const container = document.getElementById('ranking-table');
-        container.innerHTML = `
-          <table class="ranking-table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Jugador</th>
-                <th>Puntos</th>
-                <th>Tour</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${data.map(player => `
-                <tr class="${player['Top 64'] === '✅' ? 'top64' : ''}">
-                  <td>${player['Posición']}</td>
-                  <td>${player['Jugador']}</td>
-                  <td>£${(player['Puntos (£)'] / 1000).toFixed(1)}k</td>
-                  <td>${player['Tour Card (años)']}</td>
+        const top64 = data.filter(player => player['Top 64'] === '✅');
+        const resto = data.filter(player => player['Top 64'] !== '✅');
+
+        function renderTable(players) {
+          return `
+            <table class="ranking-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Jugador</th>
+                  <th>Puntos</th>
+                  <th>PDC desde</th>
+                  <th>Años con carta</th>
                 </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        `;
+              </thead>
+              <tbody>
+                ${players.map(player => `
+                  <tr>
+                    <td>${player['Posición']}</td>
+                    <td>${player['Jugador']}</td>
+                    <td>£${Number(player['Puntos (£)']).toLocaleString()}</td>
+                    <td>${player['PDC desde']}</td>
+                    <td>${player['Años con carta (2025 - PDC desde)']}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `;
+        }
+
+        document.getElementById('ranking-top64').innerHTML = renderTable(top64);
+        document.getElementById('ranking-resto').innerHTML = renderTable(resto);
       })
       .catch(() => {
-        document.getElementById('ranking-table').innerHTML = '<p>Error al cargar el ranking.</p>';
+        document.getElementById('ranking-top64').innerHTML = '<p>Error al cargar el ranking.</p>';
+        document.getElementById('ranking-resto').innerHTML = '';
       });
   </script>
 </body>
