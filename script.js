@@ -420,6 +420,36 @@ function setupMenu(){
   });
 }
 
+function loadRanking() {
+  fetch('ranking.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('ranking-table');
+      container.innerHTML = `
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Jugador</th>
+              <th>Puntos</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.ranking.map(player => `
+              <tr class="${player.pos <= 64 ? 'top64' : ''}">
+                <td>${player.pos}</td>
+                <td>${player.jugador} (${player.tour})</td>
+                <td>£${(player.puntos / 1000).toFixed(1)}k</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    })
+    .catch(error => console.error('Error cargando ranking:', error));
+}
+
+
   // Links de secciones
   document.getElementById('link-calendario').addEventListener('click', () => {
     showSection('calendario');
@@ -440,6 +470,11 @@ function setupMenu(){
     showSection('contacto');
     sidebar.classList.add('hidden');
   });
+document.getElementById('link-ranking').addEventListener('click', () => {
+  showSection('ranking');
+  loadRanking();
+  sidebar.classList.add('hidden');
+});
 
 // Pop-up para eventos
 function setupPopup(){
@@ -503,6 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
       break;
   }
 });
+
 
 
 
