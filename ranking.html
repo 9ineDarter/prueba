@@ -45,7 +45,7 @@
   </div>
 
   <script>
-    fetch('articles/ranking_dardos_pdc_desde.xlsx')
+    fetch('ranking_dardos_pdc_desde.xlsx')
       .then(res => res.arrayBuffer())
       .then(buffer => {
         const workbook = XLSX.read(buffer, { type: 'array' });
