@@ -4,31 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>InfoDarts - Ranking PDC Order Of Merit</title>
-  <meta name="description" content="Clasificación oficial PDC actualizada tras los torneos recientes.">
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="styles-mobile.css" />
   <script src="scripts/xlsx.full.min.js"></script>
 </head>
 <body>
-
-  <!-- Sidebar -->
+ 
   <aside id="sidebar" class="sidebar hidden">
     <h2>InfoDarts</h2>
     <ul>
       <li><a id="link-calendario" href="index.html#calendario">Calendario</a></li>
-      <li><a id="link-actualidad" href="index.html#actualidad">Actualidad</a></li>
+      <li><a id="link-entrevistas" href="index.html#entrevistas">Entrevistas</a></li>
       <li><a id="link-rutinas" href="index.html#rutinas">Rutinas de Entrenamiento</a></li>
-      <li><a href="ranking.html">Ranking PDC Order Of Merit</a></li>
+      <li><a id="link-entrevistas" href="index.html#entrevistas">Ranking PDC Order Of Merit</a></li>
       <li><a id="link-contacto" href="index.html#contacto">Contacto</a></li>
     </ul>
   </aside>
 
-  <!-- Main content -->
-  <div class="main-content">
+  <main class="main-content">
     <header class="header">
-      <h1>InfoDarts</h1>
-      <h2 class="subtitle">Ranking PDC Order of Merit</h2>
-      <button id="menuToggle" class="hamburger" aria-label="Toggle Menu" aria-expanded="false">☰</button>
+      <h1>Ranking PDC Order of Merit</h1>
+      <p class="subtitle">Clasificación oficial actualizada tras los torneos recientes</p>
     </header>
 
     <section class="article-container">
@@ -37,12 +33,8 @@
 
       <h2 class="section-title">📋 Resto del ranking</h2>
       <div id="ranking-resto">Cargando...</div>
-
-      <div style="text-align: center; margin-top: 20px; display: flex; justify-content: center; gap: 12px;">
-        <a href="index.html#calendario" class="home-button">🏠 Inicio</a>
-        <a href="index.html#actualidad" class="back-button">← Actualidad</a>
-      </div>
     </section>
+  </main>
 
     <footer>
       <a href="https://www.instagram.com/9inedarter" target="_blank">Instagram</a> |
@@ -52,56 +44,51 @@
     </footer>
   </div>
 
-  <!-- Script para cargar ranking -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      setupMenu();
+    fetch('articles/ranking_dardos_pdc_desde.xlsx')
+      .then(res => res.arrayBuffer())
+      .then(buffer => {
+        const workbook = XLSX.read(buffer, { type: 'array' });
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const data = XLSX.utils.sheet_to_json(sheet);
 
-      fetch('articles/ranking_dardos_pdc_desde.xlsx')
-        .then(res => res.arrayBuffer())
-        .then(buffer => {
-          const workbook = XLSX.read(buffer, { type: 'array' });
-          const sheet = workbook.Sheets[workbook.SheetNames[0]];
-          const data = XLSX.utils.sheet_to_json(sheet);
+        const top64 = data.filter(player => player['Top 64'] === '✅');
+        const resto = data.filter(player => player['Top 64'] !== '✅');
 
-          const top64 = data.filter(player => player['Top 64'] === '✅');
-          const resto = data.filter(player => player['Top 64'] !== '✅');
-
-          function renderTable(players) {
-            return `
-              <table class="ranking-table">
-                <thead>
+        function renderTable(players) {
+          return `
+            <table class="ranking-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Jugador</th>
+                  <th>Puntos</th>
+                  <th>PDC desde</th>
+                  <th>Años con carta</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${players.map(player => `
                   <tr>
-                    <th>#</th>
-                    <th>Jugador</th>
-                    <th>Puntos</th>
-                    <th>PDC desde</th>
-                    <th>Años con carta</th>
+                    <td>${player['Posición']}</td>
+                    <td>${player['Jugador']}</td>
+                    <td>£${Number(player['Puntos (£)']).toLocaleString()}</td>
+                    <td>${player['PDC desde']}</td>
+                    <td>${player['Años con carta (2025 - PDC desde)']}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  ${players.map(player => `
-                    <tr>
-                      <td>${player['Posición']}</td>
-                      <td>${player['Jugador']}</td>
-                      <td>£${Number(player['Puntos (£)']).toLocaleString()}</td>
-                      <td>${player['PDC desde']}</td>
-                      <td>${player['Años con carta (2025 - PDC desde)']}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            `;
-          }
+                `).join('')}
+              </tbody>
+            </table>
+          `;
+        }
 
-          document.getElementById('ranking-top64').innerHTML = renderTable(top64);
-          document.getElementById('ranking-resto').innerHTML = renderTable(resto);
-        })
-        .catch(() => {
-          document.getElementById('ranking-top64').innerHTML = '<p>Error al cargar el ranking.</p>';
-          document.getElementById('ranking-resto').innerHTML = '';
-        });
-    });
+        document.getElementById('ranking-top64').innerHTML = renderTable(top64);
+        document.getElementById('ranking-resto').innerHTML = renderTable(resto);
+      })
+      .catch(() => {
+        document.getElementById('ranking-top64').innerHTML = '<p>Error al cargar el ranking.</p>';
+        document.getElementById('ranking-resto').innerHTML = '';
+      });
   </script>
 </body>
 </html>
